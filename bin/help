@@ -1,0 +1,8 @@
+#!/usr/bin/env ruby
+
+##require '../lib/volunteer'
+
+require "bundler/setup" #from console
+require "volunteer"
+
+Volunteer::CLI.new.call
