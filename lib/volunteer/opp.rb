@@ -13,14 +13,15 @@ class Volunteer::Opps
 
   def self.scrape_page_maker
     scrape_page_index.each do |opp|
-      creation = Volunteer::Creator.new
-      creation.name = opp.css('div.program-item-info h2').text.strip
-      creation.region = opp.css('div.program-item-region').text.strip
-      creation.details = opp.css('div.program-item-details').text.strip
-      creation.url = opp.search('a').attr('href').value.strip
-      creation.all << self
+      name = opp.css('div.program-item-info h2').text.strip
+      region = opp.css('div.program-item-region').text.strip
+      details = opp.css('div.program-item-details').text.strip
+      url = opp.search('a').attr('href').value.strip
+      Volunteer::Creator.new(name, region, details, url)
     end
   end
+
+  
 end
 
 

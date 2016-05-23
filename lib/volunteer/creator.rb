@@ -12,6 +12,7 @@ class Volunteer::Creator
     @@all << self
   end
 
+
   def self.all
     @@all
   end

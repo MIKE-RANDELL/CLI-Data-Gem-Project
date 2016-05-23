@@ -3,21 +3,32 @@ class Volunteer::CLI
     user_intro
   end
 
+
   def self.user_intro
     puts "Nice to see you human! Here are some volunteer opportunities, thanks!"
-    puts "\n"
-    obj = Volunteer::Opps.scrape_page_maker
-    puts "Name: #{obj.name}"
-    puts "\n"
-    puts "Region: #{obj.region}"
-    puts "\n"
-    puts "Details: #{obj.details}"
-    puts "\n"
-    puts "URL: #{obj.url}"
-    puts "\n"
+    puts "~~~~~~~~~~~~~~~~~~~~~~"
+    Volunteer::Opps.scrape_page_maker
+    printer
 
   end
 
+  def self.newline
+    puts "\n"
+  end
+
+  def self.printer
+    all_opps = Volunteer::Creator.all
+    all_opps.each_with_index do |obj, index+1|
+      puts "#{index}. Name: #{obj.name}"
+      newline
+      puts "Region: #{obj.region}"
+      newline
+      puts "Details: #{obj.details}"
+      newline
+      puts "URL: #{obj.url}"
+      newline
+    end
+  end
 
 end
 
