@@ -1,30 +1,29 @@
+
+
 class Volunteer::Opps
 
   def self.get_page
     doc = Nokogiri::HTML(open("http://www.gviusa.com/find-a-program/search-results/"))
-    binding.pry
-  
+    doc
   end
 
   def self.scrape_page_index
-
-    self.get_page.search('div.program-item-right left').each do |opp_details|
-      opp_details
-    end
+    get_page.css('.pditem')
   end
 
   def self.scrape_page_maker
-
+    scrape_page_index.each do |opp|
+      creation = Volunteer::Creator.new
+      creation.name = opp.css('div.program-item-info h2').text.strip
+      creation.region = opp.css('div.program-item-region').text.strip
+      creation.details = opp.css('div.program-item-details').text.strip
+      creation.url = opp.search('a').attr('href').value.strip
+      return creation
+    end
   end
-
-
-
 end
 
-#class Volunteer::Opps_Creator
 
-
-#end
 
 
 
