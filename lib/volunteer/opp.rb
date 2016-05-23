@@ -18,7 +18,7 @@ class Volunteer::Opps
       creation.region = opp.css('div.program-item-region').text.strip
       creation.details = opp.css('div.program-item-details').text.strip
       creation.url = opp.search('a').attr('href').value.strip
-      return creation
+      creation.all << self
     end
   end
 end
