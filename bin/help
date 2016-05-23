@@ -5,4 +5,4 @@
 require "bundler/setup" #from console
 require "volunteer"
 
-Volunteer::CLI.new.call
+Volunteer::CLI.new.run
