@@ -16,4 +16,8 @@ class Volunteer::Creator
   def self.all
     @@all
   end
+
+  def self.all_index(index)
+    @@all[index]
+  end
 end

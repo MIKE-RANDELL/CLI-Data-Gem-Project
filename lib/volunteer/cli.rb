@@ -1,15 +1,38 @@
 class Volunteer::CLI
+
   def self.run
     user_intro
   end
 
 
   def self.user_intro
-    puts "Nice to see you human! Here are some volunteer opportunities, thanks!"
-    puts "~~~~~~~~~~~~~~~~~~~~~~"
+    puts "Nice to see you human! Here are some of our volunteer opportunities, thanks!"
+    puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+    full_listing
+
+    input = nil
+    until input == 'exit'
+      puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+      puts "OPTIONS: 'list' (to get a specific listing) or 'exit'"
+      puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+      input = gets.strip.downcase
+      if input == 'list'
+        list_prompt
+      elsif input == 'exit'
+        exit_message
+      else
+        puts "Not sure what you're looking for, please retype.."
+      end
+    end
+  end
+
+  def self.full_listing
     Volunteer::Opps.scrape_page_maker
     printer
+  end
 
+  def self.exit_message
+    puts "Thanks for looking! Check back later for updated listings!"
   end
 
   def self.newline
@@ -18,8 +41,8 @@ class Volunteer::CLI
 
   def self.printer
     all_opps = Volunteer::Creator.all
-    all_opps.each_with_index do |obj, index+1|
-      puts "#{index}. Name: #{obj.name}"
+    all_opps.each_with_index do |obj, index|
+      puts "#{index+1}. Name: #{obj.name}"
       newline
       puts "Region: #{obj.region}"
       newline
@@ -30,6 +53,25 @@ class Volunteer::CLI
     end
   end
 
+  def self.listing_printer(listing_input)
+    Volunteer::Opps.scrape_page_maker
+
+    opp = Volunteer::Creator.all_index(listing_input-1)
+    puts "Name: #{opp.name}"
+    newline
+    puts "Region: #{opp.region}"
+    newline
+    puts "Details: #{opp.details}"
+    newline
+    puts "URL: #{opp.url}"
+    newline
+  end
+
+  def self.list_prompt
+    puts "What listing would you like to see?"
+    listing_input = gets.strip.to_i
+    listing_printer(listing_input)
+  end
 end
 
 
